@@ -52,7 +52,7 @@ public class CrapsSimulation
 			{
 				gameRules();
 				userBank = 1;
-				System.out.println("You start with $1 in your pocket.");
+				JOptionPane.showMessageDialog(frame, "You start with $1 in your pocket.");
 				userWager();
 				playingGamePoorly();
 			}
@@ -114,7 +114,6 @@ public class CrapsSimulation
 						point = totalDice;
 						JOptionPane.showMessageDialog(frame,"Your point is " + point);
 						JOptionPane.showMessageDialog(frame, "Roll again?");
-						String roll = userInputStrings.nextLine();
 						boolean crapsPart2 = true;
 						while (crapsPart2)
 							{
@@ -139,7 +138,6 @@ public class CrapsSimulation
 								else
 									{
 										JOptionPane.showMessageDialog(frame, "Roll again?");
-										String roll2 = userInputStrings.nextLine();
 										crapsPart2 = true;
 									}
 							}
@@ -169,7 +167,6 @@ public class CrapsSimulation
 					point = totalDice;
 					JOptionPane.showMessageDialog(frame, "Your point is " + point);
 					JOptionPane.showMessageDialog(frame,"Roll again?");
-					String roll = userInputStrings.nextLine();
 					boolean crapsPart2 = true;
 					int die3 = 0;
 					int die4 = 0;
@@ -208,8 +205,7 @@ public class CrapsSimulation
 								}
 							else
 								{
-									JOptionPane.showMessageDialog(frame, "Press enter to roll again");
-									String roll2 = userInputStrings.nextLine();
+									JOptionPane.showMessageDialog(frame, "Roll again?");
 									crapsPart2 = true; 
 								}
 						}
@@ -222,20 +218,29 @@ public class CrapsSimulation
 			int totalDice = die1 + die2;
 			int point = 0;
 			JOptionPane.showMessageDialog(frame,"You rolled " + die1 + " and a " + die2 + " for a total of " + totalDice);
-			if (totalDice == 2 || totalDice ==12)
+			if (totalDice ==12)
 				{
 					JOptionPane.showMessageDialog(frame, "You lost");
 					userBank = userBank - wager;
 					JOptionPane.showMessageDialog(frame, "You lost " + wager + " dollars! You now have " + userBank + " dollars!");
 				}
+			JOptionPane.showMessageDialog(frame, "You have no more money and have been kicked out of the Casino. Goodbye");
+			System.exit(0);
 		}
 		public static void playAgain ()
 			{
 				String playAgain = JOptionPane.showInputDialog("Play again? Yes or no?");
 					if (playAgain.toLowerCase().equals("yes"))
 						{
-							userWager ();
-							playingGame ();
+							if (userBank==0)
+								{
+									JOptionPane.showMessageDialog(frame, "You have no more money and have been kicked out of the Casino. Goodbye");
+									System.exit(0);
+								}
+							else{
+									userWager ();
+									playingGame ();
+								}
 						}
 					else if (playAgain.toLowerCase().equals("no"))
 						{

@@ -38,6 +38,10 @@ public class CrapsSimulation
 					{
 						playerJim();
 					}
+				else if (name.contains("v"))
+					{
+						playerAdvantage();
+					}
 			}
 		private static void playerJim()
 			{
@@ -56,15 +60,29 @@ public class CrapsSimulation
 				userWager();
 				playingGamePoorly();
 			}
+		private static void playerAdvantage()
+			{
+				gameRules();
+				userBank = 500;
+				JOptionPane.showMessageDialog(frame, "You start with $500 in your pocket.");
+				userWager();
+				playingGameWell();
+				playAgain();
+			}
 		public static void gameRules()
 			{
-				String rules = JOptionPane.showInputDialog("Let's play some craps! Do you need the rules of the game?");  
-				if (rules.toLowerCase().equals("yes"))
+				Object[] options = {"Yes", "No"};
+				int rules = JOptionPane.showOptionDialog(frame, "Let's play some craps! Do you need the rules of the game?",
+						"Rules",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null, options, options[1]);
+				if (rules==0)
 					{ 
 						JOptionPane.showMessageDialog(frame, "Craps is a betting game. If on your first roll, the sum of your two dice is 7 or 11, you win instantly.");
 						JOptionPane.showMessageDialog(frame, "If not, the number you rolled becomes the point. Then you roll until you get your point and win or a 7 and lose");
 					}
-				else 
+				else if (rules==1)
 					{
 						JOptionPane.showMessageDialog(frame, "Okay. Warning: the house always wins");
 					}
@@ -229,22 +247,44 @@ public class CrapsSimulation
 		}
 		public static void playAgain ()
 			{
-				String playAgain = JOptionPane.showInputDialog("Play again? Yes or no?");
-					if (playAgain.toLowerCase().equals("yes"))
+				Object[] options = {"Yes", "No"};
+				int playAgain = JOptionPane.showOptionDialog(frame, "Play again?",
+						"Play Again",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null, options, options[0]);
+					if (playAgain == 0)
 						{
 							if (userBank==0)
 								{
 									JOptionPane.showMessageDialog(frame, "You have no more money and have been kicked out of the Casino. Goodbye");
 									System.exit(0);
 								}
-							else{
+							if (name.toLowerCase().equals("jim"))
+								{
+									userWager();
+									playingGameWell();
+								}
+							if (name.toLowerCase().contains("v"))
+								{
+									userWager();
+									playingGameWell();
+								}
+							if (name.toLowerCase().contains("E"))
+								{
+									userWager();
+									playingGamePoorly();
+								}
+							else
+								{
 									userWager ();
 									playingGame ();
 								}
 						}
-					else if (playAgain.toLowerCase().equals("no"))
+					else if (playAgain== 1)
 						{
 							JOptionPane.showMessageDialog(frame, "Thanks for playing " + name + ". Go do something more entertaining, I guess.");
+							System.exit(0);
 						}
 					else 
 						{
